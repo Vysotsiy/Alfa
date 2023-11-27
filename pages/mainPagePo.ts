@@ -1,4 +1,5 @@
 import {expect, Locator, Page} from "@playwright/test";
+import {StateHelper} from "../helpers/stateHelper";
 
 export class BasePage {
     private page: Page;
@@ -52,21 +53,28 @@ export class BasePage {
         return orderDetails
     }
 
-    public  async  orderAllItems(): Promise<Card[]> {
+    public  async  orderAllItems(state:StateHelper): Promise<Card[]> {
         await expect(this.allNotebookItems()).toHaveCount(8);
        const elementList: Locator[] =  await this.allNotebookItems().all();
        const cards: Card[] = [];
-       // const priceAllItems:String[] = [];
+       const totalAmount:String[] = [];
 
        for (const card of elementList) {
            await this.buttonOrder(card).click();
-           // priceAllItems.push(await this.priceItem(card).innerText());
+
+           totalAmount.push((await this.priceItem(card).innerText()).split(" ")[0]);
 
            cards.push({
                name: await this.productName(card).innerText(),
                price: `- ${(await this.priceItem(card).innerText()).split(' ')[0]} р.`,
            })
        }
+       state.setValue("totalAmount", totalAmount);
+       // console.log("TYPE====", typeof(JSON.stringify(totalAmount)));
+       // const testParse = JSON.stringify(totalAmount)
+       // await this.page.evaluate(() => {
+       //      return localStorage.setItem('totalAmount', testParse);
+       //  });
        return cards;
     }
 }
