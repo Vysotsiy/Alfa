@@ -70,11 +70,6 @@ export class BasePage {
            })
        }
        state.setValue("totalAmount", totalAmount);
-       // console.log("TYPE====", typeof(JSON.stringify(totalAmount)));
-       // const testParse = JSON.stringify(totalAmount)
-       // await this.page.evaluate(() => {
-       //      return localStorage.setItem('totalAmount', testParse);
-       //  });
        return cards;
     }
 }

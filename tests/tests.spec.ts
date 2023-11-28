@@ -1,14 +1,13 @@
-import {expect, Locator, test} from "@playwright/test";
+import {expect, test} from "@playwright/test";
 import {BasePage, Card} from "../pages/mainPagePo";
 import {ShoppingCart} from "../pages/shoppingCartPo";
 import {Assertions} from "../helpers/assertions";
 import {LoginPagePo} from "../pages/loginPagePo";
 import {StateHelper} from "../helpers/stateHelper";
 import {ArrayWorker} from "../helpers/arrayWorker";
-import exp = require("node:constants");
 
 
-test.describe('Пример', () => {
+test.describe('Alfa', () => {
     let basePage: BasePage;
     let shoppingCart: ShoppingCart;
     let assertions: Assertions;
@@ -16,7 +15,7 @@ test.describe('Пример', () => {
     let state: StateHelper;
     let arrayWorker: ArrayWorker;
 
-    test.beforeEach(async ({ page,request }) => {
+    test.beforeEach(async ({ page}) => {
         basePage = new BasePage(page);
         shoppingCart = new ShoppingCart(page);
         assertions = new Assertions();
@@ -98,7 +97,7 @@ test.describe('Пример', () => {
         expect(page.url()).toContain("/basket");
     });
 
-    test('Тест-кейс 4. Переход в корзину с 9 разными товарами.', async ({ page,request}) => {
+    test('Тест-кейс 4. Переход в корзину с 9 разными товарами.', async ({ page}) => {
         const mainOrderData = await basePage.orderAllItems(state);
         const total:number = await arrayWorker.getSummElementForArray(state.getValue("totalAmount"))
         await shoppingCart.shoppingCartIcon.click();
